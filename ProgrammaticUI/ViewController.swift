@@ -28,8 +28,28 @@ class ViewController: UIViewController {
         
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+        button.setTitleColor(.gray, for: .normal)
         button.setTitle("Prev", for: .normal)
         return button
+    }()
+    
+    let nextButton: UIButton = {
+        
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 13)
+        button.setTitle("Next", for: .normal)
+        return button
+    }()
+    
+    let pageControl: UIPageControl = {
+        let pageC = UIPageControl()
+        pageC.currentPage = 0
+        pageC.numberOfPages = 3
+        pageC.currentPageIndicatorTintColor = .green
+        pageC.pageIndicatorTintColor = .gray
+        return pageC
     }()
     
     override func viewDidLoad() {
@@ -41,19 +61,23 @@ class ViewController: UIViewController {
     }
 
     func setupBottomControlls(){
-        view.addSubview(previousButton)
-        previousButton.backgroundColor = .green
-        previousButton.frame = CGRect(x: 0, y: 0, width: 100, height: 50)
+        
+        let bottomStackView = UIStackView(arrangedSubviews: [previousButton, pageControl, nextButton])
+        bottomStackView.translatesAutoresizingMaskIntoConstraints = false
+        bottomStackView.distribution = .fillEqually
+        view.addSubview(bottomStackView)
+        
         NSLayoutConstraint.activate([
-            previousButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
-            previousButton.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
-            previousButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
-            previousButton.heightAnchor.constraint(equalToConstant: 55)
+            bottomStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 0),
+            bottomStackView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 0),
+            bottomStackView.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: 0),
+            bottomStackView.heightAnchor.constraint(equalToConstant: 55)
         ])
         
     }
     
     func setupLayout() {
+        
         let topImageContainerView = UIView()
         topImageContainerView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(topImageContainerView)
